@@ -1,0 +1,93 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    background-color: cadetblue;
+}
+body{
+    font-family: "Roboto", sans-serif;
+    height: 1000px;
+    width: 400px;
+    background-color: white;
+    margin: 0 auto;
+    font-size: 10px;
+    
+}
+h3{
+    font-size: 15px;
+    color: tomato;
+    padding: 10px;
+    border-bottom: 1px solid #afafaf;
+}
+table{
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+}
+
+table thead td{
+    padding: 10px;
+    background-color: lightslategray;
+    font-weight: bold;
+    color: white;
+}
+table tbody td{
+    padding: 5px;
+
+}
+table tbody tr:nth-child(even){
+    background-color: rgb(229,231,233)
+}
+.edit,.delete,.add-btn{
+text-decoration: none;
+color: white;
+background-color: blueviolet;
+
+padding: 2px 10px 2px 10px;
+text-align: center;
+border-radius: 3px;
+
+}
+.delete{
+    background-color: red;
+}
+p{
+    text-align: right;
+    padding: 5px;
+}
+.add-btn{
+    background-color: darkslategray;
+}
+.form-group{
+    background: red;
+    margin-top: 10px;
+    padding: 5px;
+}
+.form-group label,.form-group input{
+    display: block   ;
+}
+button{
+    
+    color: white;
+    background-color: blueviolet;
+    border: none;
+    font-size: 12px;
+    padding: 2px 10px 2px 10px;
+    
+    border-radius: 3px;
+    
+    }
+    .alert{
+        display: block;
+        padding: 5px;
+        background-color: green;
+        border: 3px;
+        height: 20px;
+        color: white;
+    }
+    input{
+        font-size: 11px;
+    }
