@@ -28,14 +28,29 @@
     </tbody>
 </table>
    <div class="pagination">
-        {{#if (gt currentPage 1)}}
-            <a href="?page={{sub currentPage 1}}&limit={{limit}}">Previous</a>
+    {{#if (gt currentPage 1)}}
+        <a href="?page={{sub currentPage 1}}&limit={{limit}}" class="page-link">Previous</a>
+    {{/if}}
+
+    {{#if (gt currentPage 4)}}
+        <a href="?page=1&limit={{limit}}" class="page-link">1</a>
+        <span class="dots">...</span>
+    {{/if}}
+
+    {{#range totalPages}}
+        {{#if (or (eq this 1) (eq this totalPages) (and (gte this (sub currentPage 2)) (lte this (add currentPage 2))))}}
+            <a href="?page={{this}}&limit={{../limit}}" class="page-link {{#if (eq ../currentPage this)}}active{{/if}}">{{this}}</a>
         {{/if}}
-        {{#each (range totalPages)}}
-            <a href="?page={{this}}&limit={{../limit}}" class="{{#if (eq ../currentPage this)}}active{{/if}}">{{this}}</a>
-            
-        {{/each}}
-        {{#if (lt currentPage totalPages)}}
-            <a href="?page={{add currentPage 1}}&limit={{limit}}">Next</a>
-        {{/if}}
-    </div>
+    {{/range}}
+
+    {{#if (lt currentPage (sub totalPages 3))}}
+        <span class="dots">...</span>
+        <a href="?page={{totalPages}}&limit={{limit}}" class="page-link">{{totalPages}}</a>
+    {{/if}}
+
+    {{#if (lt currentPage totalPages)}}
+        <a href="?page={{add currentPage 1}}&limit={{limit}}" class="page-link">Next</a>
+    {{/if}}
+</div>
+
+

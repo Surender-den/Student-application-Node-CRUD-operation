@@ -8,9 +8,9 @@ const con = mysql.createPool({
     database:process.env.DB_NAME
 })
 exports.view = (req, res) => {
-    // Get the page and limit from the request query, default to page 1 and limit 10 if not provided
+    // Get the page and limit from the request query, default to page 1 and limit 15 if not provided
     let page = parseInt(req.query.page) || 1;
-    let limit = parseInt(req.query.limit) || 10;
+    let limit = 15; // Updated to 15 records per page
     let offset = (page - 1) * limit;
 
     // Check database connection
@@ -56,12 +56,10 @@ exports.save=(req,res)=>{
 
         const {name,age,city}=req.body;
 
-
-
         connection.query("insert into user (NAME,AGE,CITY) values (?,?,?)",[name,age,city] ,(err,rows)=>{
             connection.release();
             if(!err ){
-                res.render("adduser",{msg:"user details add sucessfully"});
+                res.render("adduser",{msg:"user details add successfully"});
             }else{
                 console.log("error in listing data "+err);
             }
@@ -92,8 +90,6 @@ exports.edit=(req,res)=>{
         const {name,age,city}=req.body;
         let id=req.params.id;
 
-
-
         connection.query("update user set  NAME=?,AGE=?,CITY=? where ID=?",[name,age,city,id] ,(err,rows)=>{
             connection.release();
             if(!err ){
@@ -106,7 +102,7 @@ exports.edit=(req,res)=>{
                         connection.release();
                         if(!err ){
                             
-                            res.render("edituser",{rows,msg:"user details Updated sucessfully"});
+                            res.render("edituser",{rows,msg:"user details Updated successfully"});
                         }else{
                             console.log("error in listing data "+err);
                         }
