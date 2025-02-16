@@ -1,21 +1,23 @@
-
-  {
+{
   "name": "node_crud",
   "version": "1.0.0",
   "description": "Node Crud Operation",
   "main": "index.js",
   "scripts": {
-  "start": "nodemon appy.js",  
-  "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon appy.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Surender Kumar",
   "license": "ISC",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
-    "mysql": "^2.18.1"
+    "faker": "^5.5.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.8"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

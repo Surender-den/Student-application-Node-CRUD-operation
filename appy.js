@@ -1,6 +1,8 @@
 const express = require('express');
 const exphbs =  require("express-handlebars");
 const bodyParser=require("body-parser");
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const Handlebars = require('handlebars');
 
 
 require('dotenv').config();
@@ -18,10 +20,31 @@ appy.use(bodyParser.json());
 
 //static files
 appy.use(express.static("public"));
-
+// Handlebars helpers
+const hbs = exphbs.create({
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+    helpers: {
+        add: (a, b) => a + b,
+        sub: (a, b) => a - b,
+        eq: (a, b) => a === b,
+        gt: (a, b) => a > b,
+        lt: (a, b) => a < b,
+        in: (currentpage, list) => list.includes(currentpage),
+        
+        range: (n) => {
+            let arr = [];
+            for (let i = 1; i <= n; i++) {
+                arr.push(i);
+            }
+            return arr;
+        }
+    },
+    
+    extname:".hbs"
+});
 //template engine
-const handlebars = exphbs.create({extname:".hbs"});
-appy.engine('hbs',handlebars.engine);
+// const handlebars = exphbs.create({});
+appy.engine('hbs',hbs.engine);
 appy.set("view engine","hbs"); 
 
 // //MySQL

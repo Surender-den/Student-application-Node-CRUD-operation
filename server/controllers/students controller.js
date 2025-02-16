@@ -7,21 +7,45 @@ const con = mysql.createPool({
     password:process.env.DB_PASS,
     database:process.env.DB_NAME
 })
-exports.view=(req,res)=>{
-    //check Database connection
-con.getConnection((err,connection)=>{
-    if(err) throw err
-    connection.query("select * from user" ,(err,rows)=>{
-        connection.release();
-        if(!err ){
-            res.render("home",{rows});
-        }else{
-            console.log("error in listing data "+err);
-        }
-    })
-}) 
-   
+exports.view = (req, res) => {
+    // Get the page and limit from the request query, default to page 1 and limit 10 if not provided
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+    let offset = (page - 1) * limit;
+
+    // Check database connection
+    con.getConnection((err, connection) => {
+        if (err) throw err;
+        
+        // Count total number of rows
+        connection.query("SELECT COUNT(*) AS count FROM user", (err, countResult) => {
+            if (err) {
+                connection.release();
+                console.log("Error in counting data: " + err);
+                return res.status(500).send("Internal Server Error");
+            }
+
+            let totalRows = countResult[0].count;
+            let totalPages = Math.ceil(totalRows / limit);
+
+            // Fetch the data with limit and offset
+            connection.query("SELECT * FROM user LIMIT ? OFFSET ?", [limit, offset], (err, rows) => {
+                connection.release();
+                if (!err) {
+                    res.render("home", {
+                        rows,
+                        currentPage: page,
+                        totalPages: totalPages,
+                        limit: limit
+                    });
+                } else {
+                    console.log("Error in listing data: " + err);
+                }
+            });
+        });
+    });
 }
+
 exports.adduser=(req,res)=>{
     res.render("adduser");
 }
